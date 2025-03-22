@@ -5,21 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LiveCodeLink - Online Code Editor & Link Generator</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Ad Network Script -->
-    <script src='//whephiwums.com/sdk.js' data-zone='9117784' data-sdk='show_9117784'></script>
 </head>
 <body>
     <div class="container">
         <h2>🚀 LiveCodeLink - Online Code Editor & Link Generator</h2>
+        
+        <!-- Code Editor -->
         <textarea id="codeEditor" placeholder="Write your HTML, CSS, and JavaScript code here..."></textarea>
-        <br>
-        <button onclick="updatePreview()">🔄 Update Preview</button>
-        <button onclick="generateLink()">🔗 Generate Link</button>
-        <button onclick="copyLink()">📋 Copy Link</button>
+        
+        <!-- Buttons -->
+        <div class="button-container">
+            <button onclick="copyCode()">📋 Copy Code</button>
+            <button onclick="updatePreview()">🔄 Update Preview</button>
+            <button onclick="clearCode()">❌ Clear Code</button>
+            <button onclick="generateLink()">🔗 Generate Link</button>
+            <button onclick="copyLink()">📋 Copy Link</button>
+        </div>
 
+        <!-- Live Preview -->
         <h3>Live Preview</h3>
         <iframe id="preview"></iframe>
 
+        <!-- Generated Link -->
         <h3>🔗 Generated Link:</h3>
         <div class="link-box">
             <p id="generatedLink">...</p>
