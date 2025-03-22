@@ -15,15 +15,28 @@ function updatePreview() {
     previewFrame.close();
 }
 
-function generateLink() {
+async function generateLink() {
     showAd();
     const code = encodeURIComponent(document.getElementById("codeEditor").value);
     const baseURL = window.location.href.split('?')[0];
-    const generatedURL = `${baseURL}?code=${code}`;
+    const previewURL = `${baseURL.replace('index.html', 'preview.html')}?code=${code}`;
 
-    document.getElementById("generatedLink").innerText = generatedURL;
-    navigator.clipboard.writeText(generatedURL);
+    // Shorten the URL using TinyURL
+    const shortURL = await shortenURL(previewURL);
+    document.getElementById("generatedLink").innerText = shortURL;
+    navigator.clipboard.writeText(shortURL);
     alert("🔗 Link copied!");
+}
+
+async function shortenURL(url) {
+    try {
+        const response = await fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(url)}`);
+        const data = await response.text();
+        return data;
+    } catch (error) {
+        console.error("Error shortening URL:", error);
+        return url; // Return original URL if shortening fails
+    }
 }
 
 function copyLink() {
