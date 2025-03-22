@@ -1,4 +1,13 @@
+function showAd() {
+    show_9117784().then(() => {
+        console.log('Ad watched!');
+    }).catch(() => {
+        console.log('Ad skipped!');
+    });
+}
+
 function updatePreview() {
+    showAd();
     const code = document.getElementById("codeEditor").value;
     const previewFrame = document.getElementById("preview").contentWindow.document;
     previewFrame.open();
@@ -7,15 +16,18 @@ function updatePreview() {
 }
 
 function generateLink() {
-    const code = document.getElementById("codeEditor").value;
-    const encodedCode = encodeURIComponent(code);
-    const generatedURL = `${window.location.href}#code=${encodedCode}`;
+    showAd();
+    const code = encodeURIComponent(document.getElementById("codeEditor").value);
+    const baseURL = window.location.href.split('?')[0];
+    const generatedURL = `${baseURL}?code=${code}`;
+
     document.getElementById("generatedLink").innerText = generatedURL;
     navigator.clipboard.writeText(generatedURL);
     alert("🔗 Link copied!");
 }
 
 function copyLink() {
+    showAd();
     const linkText = document.getElementById("generatedLink").innerText;
     if (linkText !== "...") {
         navigator.clipboard.writeText(linkText);
@@ -26,8 +38,7 @@ function copyLink() {
 }
 
 function loadFromURL() {
-    const hash = window.location.hash.substring(1);
-    const params = new URLSearchParams(hash);
+    const params = new URLSearchParams(window.location.search);
     const code = params.get("code");
     if (code) {
         document.getElementById("codeEditor").value = decodeURIComponent(code);
@@ -35,4 +46,16 @@ function loadFromURL() {
     }
 }
 
-window.onload = loadFromURL;
+window.onload = () => {
+    loadFromURL();
+    show_9117784({
+        type: 'inApp',
+        inAppSettings: {
+            frequency: 2,
+            capping: 0.1,
+            interval: 30,
+            timeout: 5,
+            everyPage: false
+        }
+    });
+};
