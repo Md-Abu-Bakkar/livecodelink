@@ -1,31 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LiveCodeLink Preview</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-        iframe {
-            width: 100%;
-            height: 100vh;
-            border: none;
-        }
-    </style>
-</head>
-<body>
-    <iframe id="previewFrame"></iframe>
-    <script>
-        const params = new URLSearchParams(window.location.search);
-        const code = params.get("code");
-        const previewFrame = document.getElementById("previewFrame").contentWindow.document;
-        previewFrame.open();
-        previewFrame.write(decodeURIComponent(code));
-        previewFrame.close();
-    </script>
-</body>
-</html>
+async function generateLink() {
+    const code = encodeURIComponent(document.getElementById("codeEditor").value);
+    const baseURL = window.location.href.split('?')[0];
+    const previewURL = `${baseURL.replace('index.html', 'preview.html')}?code=${code}`;
+
+    // Shorten the URL using TinyURL
+    const shortURL = await shortenURL(previewURL);
+    document.getElementById("generatedLink").innerText = shortURL;
+    navigator.clipboard.writeText(shortURL);
+    alert("🔗 Link copied!");
+}
