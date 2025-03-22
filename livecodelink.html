@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LiveCodeLink - Online Code Editor & Link Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>🚀 LiveCodeLink - Online Code Editor & Link Generator</h2>
+        <textarea id="codeEditor" placeholder="Write your HTML, CSS, and JavaScript code here..."></textarea>
+        <br>
+        <button onclick="updatePreview()">🔄 Update Preview</button>
+        <button onclick="generateLink()">🔗 Generate Link</button>
+        <button onclick="copyLink()">📋 Copy Link</button>
+
+        <h3>Live Preview</h3>
+        <iframe id="preview"></iframe>
+
+        <h3>🔗 Generated Link:</h3>
+        <p class="link-box" id="generatedLink">...</p>
+    </div>
+
+    <p class="footer">
+        <a href="https://bdtools.top/site/LiveCodeLink_PrivacyPolicy.html?policy=1" style="color: #ff7b00;">Privacy Policy</a> | LiveCodeLink &copy; 2025
+    </p>
+
+    <script src="script.js"></script>
+</body>
+</html>

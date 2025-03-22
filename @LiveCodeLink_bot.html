@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LiveCodeLink - Online Code Editor & Link Generator</title>
+    
+    <!-- Ad Network Script -->
+    <script src='//whephiwums.com/sdk.js' data-zone='9117784' data-sdk='show_9117784'></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #1e1e2e;
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #ff7b00;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #282a36;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            background-color: #282a36;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 10px;
+            font-size: 14px;
+            resize: vertical;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        iframe {
+            width: 100%;
+            height: 300px;
+            border: 1px solid #444;
+            background: white;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        button {
+            background: #ff7b00;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #e66a00;
+        }
+
+        .link-box {
+            background: white;
+            color: #000;
+            padding: 10px;
+            border-radius: 5px;
+            word-break: break-all;
+            display: inline-block;
+            margin-top: 10px;
+            width: 80%;
+            text-align: center;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #888;
+        }
+
+        @media (max-width: 768px) {
+            textarea, iframe, .link-box {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>🚀 LiveCodeLink - Online Code Editor & Link Generator</h2>
+        
+        <textarea id="codeEditor" placeholder="Write your HTML, CSS, and JavaScript code here..."></textarea>
+
+        <br>
+        <button onclick="updatePreview()">🔄 Update Preview</button>
+        <button onclick="generateLink()">🔗 Generate Link</button>
+        <button onclick="copyLink()">📋 Copy Link</button>
+
+        <h3>Live Preview</h3>
+        <iframe id="preview"></iframe>
+
+        <h3>🔗 Generated Link:</h3>
+        <p class="link-box" id="generatedLink">...</p>
+        <button onclick="copyLink()">📋 Copy Link</button>
+    </div>
+
+    <p class="footer">
+        <a href="https://bdtools.top/site/LiveCodeLink_PrivacyPolicy.html?policy=1" style="color: #ff7b00;">Privacy Policy</a> | LiveCodeLink &copy; 2025
+    </p>
+
+    <script>
+        function showAd() {
+            show_9117784().then(() => {
+                console.log('Ad watched!');
+            }).catch(() => {
+                console.log('Ad skipped!');
+            });
+        }
+
+        function updatePreview() {
+            showAd();
+            let code = document.getElementById("codeEditor").value;
+            let previewFrame = document.getElementById("preview").contentWindow.document;
+            previewFrame.open();
+            previewFrame.write(code);
+            previewFrame.close();
+        }
+
+        function generateLink() {
+            showAd();
+            let code = encodeURIComponent(document.getElementById("codeEditor").value);
+            let baseURL = window.location.href.split('?')[0];
+            let generatedURL = `${baseURL}?code=${code}`;
+
+            document.getElementById("generatedLink").innerText = generatedURL;
+            navigator.clipboard.writeText(generatedURL);
+            alert("🔗 Link copied!");
+        }
+
+        function copyLink() {
+            showAd();
+            let linkText = document.getElementById("generatedLink").innerText;
+            if (linkText !== "...") {
+                navigator.clipboard.writeText(linkText);
+                alert("📋 Link copied!");
+            } else {
+                alert("⚠ No link generated yet!");
+            }
+        }
+
+        function loadFromURL() {
+            let params = new URLSearchParams(window.location.search);
+            let code = params.get("code");
+            let policy = params.get("policy");
+
+            if (code) {
+                document.getElementById("codeEditor").value = decodeURIComponent(code);
+                updatePreview();
+            }
+
+            if (policy) {
+                showPrivacyPolicy();
+            }
+        }
+
+        function showPrivacyPolicy() {
+            document.body.innerHTML = `
+                <div style="max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); text-align: left;">
+                    <h2 style="color: #ff7b00;">Privacy Policy</h2>
+                    <p>Welcome to LiveCodeLink. Your privacy is important to us.</p>
+
+                    <h3>Information We Collect</h3>
+                    <p>We do not collect any personal data from users. However, third-party ads may use cookies to provide relevant advertisements.</p>
+
+                    <h3>Use of Cookies</h3>
+                    <p>Our website uses ads that may collect cookies for better ad targeting.</p>
+
+                    <h3>Third-Party Services</h3>
+                    <p>We use third-party ad networks that may collect user data for personalized ads.</p>
+
+                    <h3>Changes to This Policy</h3>
+                    <p>We may update this Privacy Policy from time to time.</p>
+
+                    <h3>Contact Us</h3>
+                    <p>If you have any questions, please contact us.</p>
+
+                    <p><a href="https://bdtools.top/site/LiveCodeLink_PrivacyPolicy.html" style="color: #ff7b00;">Back to Home</a></p>
+                </div>
+            `;
+        }
+
+        window.onload = () => {
+            loadFromURL();
+            show_9117784({ 
+                type: 'inApp', 
+                inAppSettings: { 
+                    frequency: 2, 
+                    capping: 0.1, 
+                    interval: 30, 
+                    timeout: 5, 
+                    everyPage: false 
+                } 
+            });
+        };
+    </script>
+
+</body>
+</html>

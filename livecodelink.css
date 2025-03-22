@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link Generator with Image Upload</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .upload-button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .upload-button:hover {
+            background-color: #0056b3;
+        }
+        .link-display {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Link Generator with Image Upload</h2>
+    <form id="linkForm">
+        <label for="imageUrl">Upload an Image</label>
+        <input type="file" id="imageUpload" accept="image/*" class="upload-button" required>
+        
+        <label for="linkInput">Enter a Redirect URL</label>
+        <input type="text" id="redirectUrl" placeholder="Enter the original URL" required>
+        
+        <label for="descriptionInput">Enter a Description</label>
+        <input type="text" id="descriptionInput" placeholder="Enter a description for the link" required>
+        
+        <button type="submit">Generate Link</button>
+    </form>
+    
+    <div class="link-display" id="linkDisplay"></div>
+</div>
+
+<script>
+    document.getElementById('linkForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        const imageFile = document.getElementById('imageUpload').files[0];
+        const redirectUrl = document.getElementById('redirectUrl').value;
+        const description = document.getElementById('descriptionInput').value;
+        
+        if (imageFile && redirectUrl && description) {
+            // Upload image to imgbb.com
+            const formData = new FormData();
+            formData.append('image', imageFile);
+            
+            fetch('https://api.imgbb.com/1/upload?key=e34aa769e899fcacf1f86b2a99006d23', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                const imageUrl = data.data.url;  // Get image URL from imgbb
+                
+                const generatedLink = `https://velograb.blogspot.com/p/fjc.html?img=${encodeURIComponent(imageUrl)}&desc=${encodeURIComponent(description)}&url=${encodeURIComponent(redirectUrl)}&expire=${Math.floor(Date.now() / 1000) + (7 * 24 * 60 * 60)}`;
+                
+                document.getElementById('linkDisplay').innerHTML = `<p>Your generated link: <a href="${generatedLink}" target="_blank">${generatedLink}</a></p>`;
+            })
+            .catch(error => {
+                console.error('Error uploading image:', error);
+            });
+        }
+    });
+</script>
+
+</body>
+</html>
